@@ -1,0 +1,74 @@
+[
+  {
+    "id": "task_001",
+    "type": "task",
+    "title": "Finish project report",
+    "description": "Complete the final project report for Web Development course",
+    "dueDate": "2025-01-15",
+    "duration": 90,
+    "tag": "Study",
+    "status": "Todo",
+    "priority": "High",
+    "createdAt": "2025-01-10T09:00:00Z",
+    "updatedAt": "2025-01-10T09:00:00Z"
+  },
+  {
+    "id": "task_002",
+    "type": "task",
+    "title": "Study for Math Exam",
+    "description": "Review calculus and algebra chapters",
+    "dueDate": "2025-01-12",
+    "duration": 120,
+    "tag": "Study",
+    "status": "Inprogress",
+    "priority": "High",
+    "createdAt": "2025-01-09T14:30:00Z",
+    "updatedAt": "2025-01-09T14:30:00Z"
+  },
+  {
+    "id": "task_003",
+    "type": "task",
+    "title": "Buy groceries",
+    "description": "Get milk, bread, and vegetables",
+    "dueDate": "2025-01-08",
+    "duration": 30,
+    "tag": "Personal",
+    "status": "Completed",
+    "priority": "Low",
+    "createdAt": "2025-01-08T10:00:00Z",
+    "updatedAt": "2025-01-08T10:00:00Z"
+  },
+  {
+    "id": "event_001",
+    "type": "event",
+    "title": "Campus Meeting",
+    "description": "Weekly student council meeting",
+    "date": "2025-01-15",
+    "time": "14:00",
+    "tag": "Meeting",
+    "createdAt": "2025-01-10T08:00:00Z",
+    "updatedAt": "2025-01-10T08:00:00Z"
+  },
+  {
+    "id": "event_002",
+    "type": "event",
+    "title": "Study Group Session",
+    "description": "Group study for upcoming exams",
+    "date": "2025-01-20",
+    "time": "18:00",
+    "tag": "Study",
+    "createdAt": "2025-01-11T16:00:00Z",
+    "updatedAt": "2025-01-11T16:00:00Z"
+  },
+  {
+    "id": "event_003",
+    "type": "event",
+    "title": "Workshop on AI",
+    "description": "Introduction to Artificial Intelligence concepts",
+    "date": "2025-01-05",
+    "time": "10:00",
+    "tag": "Workshop",
+    "createdAt": "2025-01-03T12:00:00Z",
+    "updatedAt": "2025-01-03T12:00:00Z"
+  }
+]
