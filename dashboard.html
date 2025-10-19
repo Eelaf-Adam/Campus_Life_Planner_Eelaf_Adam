@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusLife - Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<!-- Side Section -->
+<body class="app-layout"> <aside class="new-sidebar"> <a href="dashboard.html" class="logo-link">
+    <img src="assets/Logo2.png" alt="CampusLife Logo" class="logo-img">
+</a>
+    <nav>
+        <a href="dashboard.html" class="active"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+        <a href="index.html"><i data-lucide="info"></i>About</a>
+        <a href="tasks.html"><i data-lucide="check-circle"></i>Tasks</a>
+        <a href="events.html"><i data-lucide="calendar"></i>Events</a>
+        <a href="settings.html"><i data-lucide="settings"></i>Settings</a>
+    </nav>
+</aside>
+
+
+<!-- Main Content -->
+<main class="content">
+    <header class="page-header dashboard-header">
+        <h1>Dashboard</h1>
+    </header>
+
+    <section class="welcome-section">
+        <div class="welcome-illustration">
+            <img src="assets/user.png" alt="Student picture" class="student-illustration"/>
+            </div>
+
+        <h2 class="welcome-title">Hello, Student</h2>
+        <p class="welcome-text">Let's start your journey by completing the following steps, which will  help you get started with campus life</p>
+
+        <div class="action-cards-grid">
+
+            <div class="action-card task-card">
+                <h3>Add your first task</h3>
+                <p>Add your first task and you can start managing it regularly</p>
+                <a href="tasks.html" class="action-button primary-button">Add Now</a>
+            </div>
+
+            <div class="action-card event-card">
+                <h3>Add your first event</h3>
+                <p>Add your first event to keep track of upcoming campus activities</p>
+                <a href="events.html" class="action-button primary-button">Let's Start</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Overview -->
+<!--   
+    <section id="dashboard">
+        <h2>Dashboard Overview</h2>
+        <p id="total-tasks">Total Tasks: 0</p>
+        <p id="total-duration">Total Duration: 0 minutes</p>
+        <p id="top-tag">Top Tag: None</p>
+        <canvas id="trend-chart"></canvas> <!-- For chart visualization -->
+    </section> -->
+
+</main>
+<script>lucide.createIcons();</script>
+</body>
+</html>
