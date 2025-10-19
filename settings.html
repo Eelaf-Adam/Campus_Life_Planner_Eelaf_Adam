@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Settings — CampusLife</title>
+  <link rel="stylesheet" href="styles/settings.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="app-layout">
+
+  <!-- Sidebar (same structure as tasks/events/dashboard) -->
+  <aside class="new-sidebar">
+    <a href="dashboard.html" class="logo-link">
+      <img src="assets/Logo2.png" alt="CampusLife logo" class="logo-img">
+    </a>
+
+    <nav>
+      <a href="dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+      <a href="index.html"><i data-lucide="info"></i>About</a>
+      <a href="tasks.html"><i data-lucide="check-circle"></i>Tasks</a>
+      <a href="events.html"><i data-lucide="calendar"></i>Events</a>
+      <a href="settings.html" class="active"><i data-lucide="settings"></i>Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content">
+    <header class="page-header">
+      <h1>Settings</h1>
+    </header>
+
+    <section class="settings-section" aria-labelledby="settings-heading">
+      <h2 id="settings-heading">General settings</h2>
+
+      <div class="setting-item">
+        <label>Duration units</label>
+        <div>
+          <label><input type="radio" name="duration-unit" value="minutes"> Minutes</label>
+          <label style="margin-left:12px;"><input type="radio" name="duration-unit" value="hours"> Hours</label>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label>Weekly cap (target)</label>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <input id="cap-input" type="number" min="0" step="1" placeholder="0">
+          <span id="cap-unit">minutes</span>
+          <div id="cap-live" role="status" aria-live="polite" style="margin-left:12px;font-weight:600;color:#0f172a;">No cap set</div>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label>Theme</label>
+        <div>
+          <button id="theme-toggle" class="action-button" type="button">Toggle theme</button>
+          <button id="reset-defaults" class="action-button" type="button" style="margin-left:8px;">Reset defaults</button>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #f1f5f9;margin:12px 0;">
+
+      <h3 style="margin:0 0 8px 0;">Data management</h3>
+
+      <div class="setting-item" style="align-items:flex-start;">
+        <label style="min-width:220px;">Export / Import</label>
+        <div class="controls">
+          <button id="export-json" class="action-button primary-button" type="button">Export data (JSON)</button>
+
+          <label class="file-input-label" for="import-file">Import JSON</label>
+          <input id="import-file" type="file" accept="application/json" style="display:none;">
+
+          <button id="import-paste" class="action-button" type="button">Paste JSON (manual)</button>
+
+          <button id="clear-data" class="danger-btn" type="button" style="margin-left:6px;">Clear app data</button>
+        </div>
+      </div>
+
+      <p class="settings-help">Export includes all localStorage keys. Import will overwrite matching keys. Clear removes tasks/events only.</p>
+    </section>
+  </main>
+
+  <script src="scripts/settings.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
