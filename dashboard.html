@@ -1,68 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CampusLife - Dashboard</title>
-    <link rel="stylesheet" href="styles/dashboard.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CampusLife - Dashboard</title>
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
+<body class="app-layout">
+  <aside class="new-sidebar">
+    <a href="dashboard.html" class="logo-link">
+      <img src="assets/Logo2.png" alt="CampusLife Logo" class="logo-img">
+    </a>
 
-<!-- Side Section -->
-<body class="app-layout"> <aside class="new-sidebar"> <a href="dashboard.html" class="logo-link">
-    <img src="assets/Logo2.png" alt="CampusLife Logo" class="logo-img">
-</a>
     <nav>
-        <a href="dashboard.html" class="active"><i data-lucide="layout-dashboard"></i>Dashboard</a>
-        <a href="index.html"><i data-lucide="info"></i>About</a>
-        <a href="tasks.html"><i data-lucide="check-circle"></i>Tasks</a>
-        <a href="events.html"><i data-lucide="calendar"></i>Events</a>
-        <a href="settings.html"><i data-lucide="settings"></i>Settings</a>
+      <a href="dashboard.html" class="active"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+      <a href="index.html"><i data-lucide="info"></i>About</a>
+      <a href="tasks.html"><i data-lucide="check-circle"></i>Tasks</a>
+      <a href="events.html"><i data-lucide="calendar"></i>Events</a>
+      <a href="settings.html"><i data-lucide="settings"></i>Settings</a>
     </nav>
-</aside>
+  </aside>
 
-
-<!-- Main Content -->
-<main class="content">
-    <header class="page-header dashboard-header">
-        <h1>Dashboard</h1>
+    <!-- Main & Header -->
+  <main class="content">
+    <header class="page-header">
+      <h1>Dashboard</h1>
     </header>
 
+    <!-- user welcoming -->
     <section class="welcome-section">
-        <div class="welcome-illustration">
-            <img src="assets/user.png" alt="Student picture" class="student-illustration"/>
-            </div>
+      <div class="welcome-illustration">
+        <img src="assets/user.png" alt="Student" class="student-illustration">
+      </div>
+      <h2 class="welcome-title">Hello, Student</h2>
+      <p class="welcome-text">Manage your tasks and events — your weekly target shows remaining time below.</p>
 
-        <h2 class="welcome-title">Hello, Student</h2>
-        <p class="welcome-text">Let's start your journey by completing the following steps, which will  help you get started with campus life</p>
-
-        <div class="action-cards-grid">
-
-            <div class="action-card task-card">
-                <h3>Add your first task</h3>
-                <p>Add your first task and you can start managing it regularly</p>
-                <a href="tasks.html" class="action-button primary-button">Add Now</a>
-            </div>
-
-            <div class="action-card event-card">
-                <h3>Add your first event</h3>
-                <p>Add your first event to keep track of upcoming campus activities</p>
-                <a href="events.html" class="action-button primary-button">Let's Start</a>
-            </div>
+        <!-- Add task -->
+      <div class="action-cards-grid">
+        <div class="action-card task-card">
+          <h3>Add Tasks</h3>
+          <p>Add a task to start tracking your time</p>
+          <a href="tasks.html" class="action-button">Add Now</a>
         </div>
+
+         <!-- Add event -->
+        <div class="action-card event-card">
+          <h3>Add Events</h3>
+          <p>Keep track of campus events and deadlines</p>
+          <a href="events.html" class="action-button">Let's Start</a>
+        </div>
+      </div>
     </section>
 
-    <!-- Dashboard Overview -->
-<!--   
-    <section id="dashboard">
-        <h2>Dashboard Overview</h2>
-        <p id="total-tasks">Total Tasks: 0</p>
-        <p id="total-duration">Total Duration: 0 minutes</p>
-        <p id="top-tag">Top Tag: None</p>
-        <canvas id="trend-chart"></canvas> <!-- For chart visualization -->
-    </section> -->
+    <section id="dashboard" class="dashboard-overview" aria-labelledby="dashboard-heading">
+      <h2 id="dashboard-heading">Dashboard Overview</h2>
 
-</main>
-<script>lucide.createIcons();</script>
+      <div class="dashboard-stats" role="region" aria-label="Summary statistics">
+        <div class="stat-card"><strong id="total-tasks">0</strong><span>Total Tasks</span></div>
+        <div class="stat-card"><strong id="total-events">0</strong><span>Total Events</span></div>
+        <div class="stat-card"><strong id="total-duration">0 m</strong><span>Total Duration</span></div>
+        <div class="stat-card"><strong id="top-tag">—</strong><span>Top Tag</span></div>
+      </div>
+
+      <div id="dashboard-cap-live" class="cap-status" role="status" aria-live="polite">No weekly cap set</div>
+
+      <div class="trend-card" aria-label="Activity trend">
+        <h3>Last 7 days</h3>
+        <div class="chart-wrap">
+          <canvas id="trend-chart" aria-label="Tasks and events duration per day" role="img"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="scripts/dashboard.js"></script>
+  <script>lucide.createIcons();</script>
 </body>
 </html>
