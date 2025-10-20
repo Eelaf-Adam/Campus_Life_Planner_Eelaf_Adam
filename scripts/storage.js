@@ -1,5 +1,6 @@
 const KEY = "campuslife:records";
 
+// function to load app record
 function loadRecords() {
     try {
         return JSON.parse(localStorage.getItem(KEY) || "[]");
@@ -9,6 +10,7 @@ function loadRecords() {
     }
 }
 
+// function to save app record 
 function saveRecords(records) {
     try {
         localStorage.setItem(KEY, JSON.stringify(records));
@@ -17,12 +19,14 @@ function saveRecords(records) {
     }
 }
 
+// function to update app record 
 function saveRecord(newRecord) {
     const records = loadRecords();
     records.push(newRecord);
     saveRecords(records);
 }
 
+// function to update app record
 function updateRecord(updatedRecord) {
     const records = loadRecords();
     const index = records.findIndex(record => record.id === updatedRecord.id);
@@ -32,13 +36,14 @@ function updateRecord(updatedRecord) {
     }
 }
 
+// function to delete app record 
 function deleteRecord(id) {
     const records = loadRecords();
     const filteredRecords = records.filter(record => record.id !== id);
     saveRecords(filteredRecords);
 }
 
-// JSON Import/Export functions
+// function for JUSON import and export 
 function exportToJSON() {
     const records = loadRecords();
     const dataStr = JSON.stringify(records, null, 2);
@@ -57,7 +62,7 @@ function importFromJSON(file) {
             try {
                 const data = JSON.parse(e.target.result);
                 
-                // Validate data structure
+                // Validating the data structure
                 if (Array.isArray(data) && data.every(record => 
                     record.id && record.type && record.createdAt
                 )) {
