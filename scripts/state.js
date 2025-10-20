@@ -1,4 +1,3 @@
-// State management for Campus Life Planner
 class AppState {
     constructor() {
         this.tasks = [];
@@ -128,5 +127,4 @@ class AppState {
     }
 }
 
-// Global state instance
 window.appState = new AppState();
