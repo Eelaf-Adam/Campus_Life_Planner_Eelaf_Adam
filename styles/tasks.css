@@ -1,5 +1,5 @@
 
-/* Global Styling & Variables */
+/* global styling & variables */
 :root {
     --primary-blue: #2563eb; 
     --secondary-blue: #1e4fc4;
@@ -30,7 +30,7 @@ body {
     padding: 1.5rem 2rem;
     overflow-x: hidden;
     flex-grow: 1; 
-    margin-left: 250px; /* keep content clear of fixed sidebar */
+    margin-left: 250px; 
 }
 
 .new-sidebar {
@@ -101,7 +101,7 @@ body {
 
 
 
-/* Header */
+/* header */
 .app-top-header {
     display: flex;
     align-items: center;
@@ -218,7 +218,7 @@ body {
 }
 
 
-/* Kanban board */
+/* kanban board */
 .kanban-board {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));    
@@ -254,23 +254,37 @@ body {
    margin-left: 0.4rem;
 }
 
-
-.add-inline {
-    background: #2563eb;
-    border: none;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    color: white;
-    cursor: pointer;
+.add-task-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.add-inline i {
-    width: 16px;
-    height: 16px;
+.add-task-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.2);
 }
 
-/* Task card */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* task card */
 .task-card {
     background: #ffffff;
     border-radius: 16px;
@@ -322,7 +336,7 @@ body {
 }
 
 
-/* Task Meta */
+/* task meta */
 .task-meta {
     display: flex;
     align-items: center;
@@ -362,7 +376,7 @@ body {
 .priority-critical { background: #ef4444; }
 
 
-/* Modal */
+/* modal */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -420,7 +434,7 @@ body {
 }
 
 
-/* Task Actions */
+/* task actions */
 .task-actions {
     display: flex;
     gap: 0.5rem;
@@ -454,7 +468,8 @@ body {
     background: #dc2626;
 }
 
-/*  Responsive */
+
+/*  responsive */
 @media (max-width: 768px) {
   .kanban-board {
     grid-template-columns: 1fr;
@@ -467,7 +482,7 @@ body {
   }
 
   .content {
-    margin-left: 0; /* stack under sidebar when it collapses */
+    margin-left: 0; 
   }
 }
 
