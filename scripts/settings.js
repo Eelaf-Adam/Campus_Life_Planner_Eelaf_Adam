@@ -1,11 +1,8 @@
-// Settings management: units, weekly cap, theme, import/export, clear data
-
 (function () {
   const KEY_UNIT = 'durationUnit';
   const KEY_CAP = 'weeklyCapMinutes';
   const KEY_THEME = 'theme';
 
-  // Elements
   const unitRadios = document.querySelectorAll('input[name="duration-unit"]');
   const capInput = document.getElementById('cap-input');
   const capUnitLabel = document.getElementById('cap-unit');
@@ -17,9 +14,7 @@
   const clearBtn = document.getElementById('clear-data');
   const resetBtn = document.getElementById('reset-defaults');
 
-  function saveSetting(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
+  function saveSetting(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
   function readSetting(key, fallback) {
     const raw = localStorage.getItem(key);
     if (!raw) return fallback;
@@ -36,38 +31,43 @@
         const d = Number(it.duration || it.minutes || 0);
         if (!Number.isNaN(d)) total += d;
       }
-    } catch (e) {
-      // ignore parse errors
-    }
-    return total; // minutes
+    } catch { }
+    return total;
   }
 
   function updateCapLive() {
     const capMin = readSetting(KEY_CAP, 0);
     if (!capMin || capMin <= 0) {
+      capLive.setAttribute("aria-live","polite");
       capLive.textContent = 'No cap set';
       return;
     }
     const used = sumStoredDurations();
-    const remaining = Math.round((capMin - used));
+    const remaining = Math.round(capMin - used);
     if (remaining >= 0) {
+      capLive.setAttribute("aria-live","polite");
       capLive.textContent = `Remaining: ${formatDurationForUI(remaining)}`;
     } else {
+      capLive.setAttribute("aria-live","assertive");
       capLive.textContent = `Over by ${formatDurationForUI(Math.abs(remaining))}`;
     }
   }
 
   function formatDurationForUI(minutes) {
     const unit = readSetting(KEY_UNIT, 'minutes');
-    if (unit === 'hours') {
-      return (minutes / 60).toFixed(2) + ' h';
-    }
-    return `${minutes} m`;
+    return unit === 'hours' ? (minutes / 60).toFixed(2) + ' h' : `${minutes} m`;
+  }
+
+  function applyTheme(name) {
+    if (name === 'dark') document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+    saveSetting(KEY_THEME, name);
   }
 
   function loadSettingsToUI() {
     const unit = readSetting(KEY_UNIT, 'minutes');
     for (const r of unitRadios) r.checked = (r.value === unit);
+
     const capMin = readSetting(KEY_CAP, 0);
     if (unit === 'hours') {
       capInput.value = capMin ? (capMin / 60) : '';
@@ -78,42 +78,36 @@
       capUnitLabel.textContent = 'minutes';
       capInput.step = '1';
     }
+
     const theme = readSetting(KEY_THEME, 'light');
     applyTheme(theme);
+
     updateCapLive();
   }
 
-  function applyTheme(name) {
-    if (name === 'dark') document.documentElement.classList.add('dark');
-    else document.documentElement.classList.remove('dark');
-    saveSetting(KEY_THEME, name);
-  }
-
-  // Event listeners
   unitRadios.forEach(r => r.addEventListener('change', (e) => {
-    const newUnit = e.target.value;
-    const oldCapMin = readSetting(KEY_CAP, 0);
-    // convert stored cap to display according to new unit but keep stored value in minutes
-    saveSetting(KEY_UNIT, newUnit);
+    saveSetting(KEY_UNIT, e.target.value);
     loadSettingsToUI();
   }));
 
+  
   capInput.addEventListener('change', () => {
     const unit = readSetting(KEY_UNIT, 'minutes');
     let val = Number(capInput.value || 0);
     if (Number.isNaN(val) || val < 0) val = 0;
-    const storeMinutes = (unit === 'hours') ? Math.round(val * 60) : Math.round(val);
-    saveSetting(KEY_CAP, storeMinutes);
+    saveSetting(KEY_CAP, unit === 'hours' ? Math.round(val * 60) : Math.round(val));
     updateCapLive();
     alert('Cap saved');
   });
 
   themeToggle.addEventListener('click', () => {
-    const current = readSetting(KEY_THEME, 'light');
-    const next = current === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    alert('Theme saved: ' + next);
-  });
+  const current = localStorage.getItem('theme') || 'light';
+  const next = current === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);   
+  applyTheme(next);                      
+  alert('Theme saved: ' + next);
+});
+
 
   exportBtn.addEventListener('click', () => {
     const data = {};
@@ -132,29 +126,29 @@
     URL.revokeObjectURL(url);
   });
 
+
   importFile.addEventListener('change', (evt) => {
-    const f = evt.target.files[0];
+    const f = evt.target.files[0]; 
     if (!f) return;
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = function(e){
       try {
         const obj = JSON.parse(e.target.result);
         if (!confirm('Import will overwrite keys in localStorage. Continue?')) return;
-        for (const k of Object.keys(obj)) {
-          localStorage.setItem(k, JSON.stringify(obj[k]));
-        }
+        for (const k of Object.keys(obj)) localStorage.setItem(k, JSON.stringify(obj[k]));
         alert('Import complete');
         loadSettingsToUI();
         updateCapLive();
-      } catch (err) {
+      } catch {
         alert('Invalid JSON file');
       }
     };
-    reader.readAsText(f);
+    reader.readAsText(f); 
     importFile.value = '';
   });
 
-  importPasteBtn.addEventListener('click', async () => {
+
+  importPasteBtn.addEventListener('click', () => {
     const pasted = prompt('Paste JSON here (will overwrite keys in localStorage):');
     if (!pasted) return;
     try {
@@ -164,10 +158,11 @@
       alert('Import complete');
       loadSettingsToUI();
       updateCapLive();
-    } catch (err) {
+    } catch {
       alert('Invalid JSON');
     }
   });
+
 
   clearBtn.addEventListener('click', () => {
     if (!confirm('Clear all tasks and events from localStorage? This cannot be undone.')) return;
@@ -177,16 +172,21 @@
     updateCapLive();
   });
 
+
   resetBtn.addEventListener('click', () => {
     if (!confirm('Reset settings to defaults?')) return;
-    saveSetting(KEY_UNIT, 'minutes');
-    saveSetting(KEY_CAP, 0);
-    saveSetting(KEY_THEME, 'light');
+    saveSetting(KEY_UNIT,'minutes');
+    saveSetting(KEY_CAP,0);
+    saveSetting(KEY_THEME,'light');
     loadSettingsToUI();
     alert('Settings reset to defaults');
   });
 
-  // init
+
+  const savedTheme = localStorage.getItem(KEY_THEME);
+  if (savedTheme && savedTheme.includes('dark')) document.documentElement.classList.add('dark');
+
+
   document.addEventListener('DOMContentLoaded', () => {
     loadSettingsToUI();
   });
