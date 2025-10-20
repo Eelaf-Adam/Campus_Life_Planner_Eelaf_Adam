@@ -406,18 +406,6 @@ border-radius: 8px;
     background: #dc2626;
 }
 
-/* Dark theme (applies to any page) */
-.dark {
-  background: #0f172a; 
-  color: #f8fafc;
-}
-.dark .new-sidebar { background: #1e293b; border-right: 1px solid #334155; }
-.dark .new-sidebar nav a { color: #e2e8f0; }
-.dark .new-sidebar nav a.active,
-.dark .new-sidebar nav a:hover { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; }
-.dark .content { background: #1e293b; color: #f8fafc; }
-.dark input, .dark select, .dark button { background: #475569; color: #f8fafc; border: 1px solid #64748b; }
-
 /* Responsive */
 @media (max-width: 768px) {
 .kanban-board {
