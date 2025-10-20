@@ -1,3 +1,5 @@
+
+
 /* Global rest */
 * {
     margin: 0;
@@ -251,6 +253,15 @@ svg {
     bottom: 0;
     width: 100%;
 }
+
+
+.copyright {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+
 
 /* Tablet view */
 @media (max-width: 1200px) {
