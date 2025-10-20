@@ -45,17 +45,20 @@
         <div class="kanban-column" id="tasks-today">
             <div class="column-header">
                 <h3>Today's tasks <span class="count">0</span></h3>
-            <button class="add-inline" onclick="openModal('task-modal')"><i data-lucide="edit"></i></button>
+            <button class="add-task-btn" onclick="openModal('task-modal')">
+                <i data-lucide="plus-circle"></i>
+            </button>
             </div>
             <div class="column-content" id="today-tasks"></div>
         </div>
-
 
         <!-- Upcoming -->
         <div class="kanban-column" id="tasks-upcoming">
             <div class="column-header">
                 <h3>Upcoming tasks <span class="count">0</span></h3>
-                <button class="add-inline" onclick="openModal('task-modal')"><i data-lucide="edit"></i></button>
+                <button class="add-task-btn" onclick="openModal('task-modal')">
+                <i data-lucide="plus-circle"></i>
+            </button>
             </div>
             <div class="column-content" id="upcoming-tasks"></div>
         </div>
