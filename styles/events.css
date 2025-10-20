@@ -229,24 +229,35 @@ body {
  margin-left: 0.4rem;
 }
 
-.add-inline {
-  background: #2563eb;
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  color: white;
-  cursor: pointer;
-  display: flex;
+.add-event-btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.add-inline i {
-  width: 16px;
-  height: 16px;
+.add-event-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.2);
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
 /* Event card */
 .event-card {
   background: #ffffff;
@@ -394,6 +405,18 @@ border-radius: 8px;
 .delete-btn:hover {
     background: #dc2626;
 }
+
+/* Dark theme (applies to any page) */
+.dark {
+  background: #0f172a; 
+  color: #f8fafc;
+}
+.dark .new-sidebar { background: #1e293b; border-right: 1px solid #334155; }
+.dark .new-sidebar nav a { color: #e2e8f0; }
+.dark .new-sidebar nav a.active,
+.dark .new-sidebar nav a:hover { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; }
+.dark .content { background: #1e293b; color: #f8fafc; }
+.dark input, .dark select, .dark button { background: #475569; color: #f8fafc; border: 1px solid #64748b; }
 
 /* Responsive */
 @media (max-width: 768px) {
