@@ -45,7 +45,9 @@
             <div class="kanban-column" id="events-today">
                 <div class="column-header">
                     <h3>Today's Events <span class="count">0</span></h3>
-                    <button class="add-inline" onclick="openModal('event-modal')"><i data-lucide="edit"></i></button>
+                    <button class="add-event-btn" onclick="openModal('event-modal')">
+                <i data-lucide="plus-circle"></i>
+            </button>
                 </div>
                 <div class="column-content" id="today-events"></div>
             </div>
@@ -54,7 +56,9 @@
             <div class="kanban-column" id="events-upcoming">
                 <div class="column-header">
                     <h3>Upcoming Events <span class="count">0</span></h3>
-                    <button class="add-inline" onclick="openModal('event-modal')"><i data-lucide="edit"></i></button>
+                    <button class="add-event-btn" onclick="openModal('event-modal')">
+                <i data-lucide="plus-circle"></i>
+            </button>
                 </div>
                 <div class="column-content" id="upcoming-events"></div>
             </div>
@@ -93,11 +97,12 @@
                 <input type="text" id="event-category" placeholder="e.g Conference, Workshop, Meeting">
 
 
-
                 <button id="add-event-btn" class="action-button primary-button full-width">Add Event</button>
             </div>
         </div>
     </div>
+
+ 
 
     <script src="scripts/state.js"></script>
     <script src="scripts/validators.js"></script>
