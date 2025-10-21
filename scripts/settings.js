@@ -1,8 +1,10 @@
+// Seetings managemnet
 (function () {
   const KEY_UNIT = 'durationUnit';
   const KEY_CAP = 'weeklyCapMinutes';
   const KEY_THEME = 'theme';
 
+  // DOM elements
   const unitRadios = document.querySelectorAll('input[name="duration-unit"]');
   const capInput = document.getElementById('cap-input');
   const capUnitLabel = document.getElementById('cap-unit');
@@ -14,6 +16,7 @@
   const clearBtn = document.getElementById('clear-data');
   const resetBtn = document.getElementById('reset-defaults');
 
+  // Save and load from localStorage
   function saveSetting(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
   function readSetting(key, fallback) {
     const raw = localStorage.getItem(key);
@@ -21,6 +24,7 @@
     try { return JSON.parse(raw); } catch { return fallback; }
   }
 
+  // Calculate total duration from tasks and events
   function sumStoredDurations() {
     let total = 0;
     try {
@@ -35,6 +39,7 @@
     return total;
   }
 
+  // Update weekly cap ARIA live message 
   function updateCapLive() {
     const capMin = readSetting(KEY_CAP, 0);
     if (!capMin || capMin <= 0) {
@@ -58,12 +63,14 @@
     return unit === 'hours' ? (minutes / 60).toFixed(2) + ' h' : `${minutes} m`;
   }
 
+  // Apply dark theme
   function applyTheme(name) {
     if (name === 'dark') document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
     saveSetting(KEY_THEME, name);
   }
 
+  // Load settings into UI
   function loadSettingsToUI() {
     const unit = readSetting(KEY_UNIT, 'minutes');
     for (const r of unitRadios) r.checked = (r.value === unit);
@@ -85,12 +92,13 @@
     updateCapLive();
   }
 
+  // Change duration unit
   unitRadios.forEach(r => r.addEventListener('change', (e) => {
     saveSetting(KEY_UNIT, e.target.value);
     loadSettingsToUI();
   }));
 
-  
+  // Change weekly cap
   capInput.addEventListener('change', () => {
     const unit = readSetting(KEY_UNIT, 'minutes');
     let val = Number(capInput.value || 0);
@@ -109,6 +117,7 @@
 });
 
 
+  // Export data
   exportBtn.addEventListener('click', () => {
     const data = {};
     for (let i = 0; i < localStorage.length; i++) {
@@ -126,7 +135,7 @@
     URL.revokeObjectURL(url);
   });
 
-
+  // Import JSON file
   importFile.addEventListener('change', (evt) => {
     const f = evt.target.files[0]; 
     if (!f) return;
@@ -147,7 +156,7 @@
     importFile.value = '';
   });
 
-
+  // Paste JSON import
   importPasteBtn.addEventListener('click', () => {
     const pasted = prompt('Paste JSON here (will overwrite keys in localStorage):');
     if (!pasted) return;
@@ -163,7 +172,7 @@
     }
   });
 
-
+  // Clear all tasks and events
   clearBtn.addEventListener('click', () => {
     if (!confirm('Clear all tasks and events from localStorage? This cannot be undone.')) return;
     const keysToRemove = ['tasks','events','taskIdCounter','eventIdCounter'];
@@ -172,7 +181,7 @@
     updateCapLive();
   });
 
-
+  // Reset settings to defaults 
   resetBtn.addEventListener('click', () => {
     if (!confirm('Reset settings to defaults?')) return;
     saveSetting(KEY_UNIT,'minutes');
@@ -182,10 +191,9 @@
     alert('Settings reset to defaults');
   });
 
-
+  // Apply saved theme immediately
   const savedTheme = localStorage.getItem(KEY_THEME);
   if (savedTheme && savedTheme.includes('dark')) document.documentElement.classList.add('dark');
-
 
   document.addEventListener('DOMContentLoaded', () => {
     loadSettingsToUI();
