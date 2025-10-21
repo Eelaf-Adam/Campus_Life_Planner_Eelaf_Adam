@@ -1,130 +1,76 @@
-class AppState {
-    constructor() {
-        this.tasks = [];
-        this.events = [];
-        this.currentEditingId = null;
-        this.isEditing = false;
-        this.loadFromStorage();
-    }
+const KEY = "tasks";
 
-    loadFromStorage() {
-        try {
-            const allRecords = JSON.parse(localStorage.getItem('campuslife:records') || '[]');
-            this.tasks = allRecords.filter(record => record.type === 'task');
-            this.events = allRecords.filter(record => record.type === 'event');
-            console.log('Loaded tasks:', this.tasks.length, 'Loaded events:', this.events.length);
-        } catch (error) {
-            console.error('Error loading from storage:', error);
-            this.tasks = [];
-            this.events = [];
-        }
-    }
-
-    saveToStorage() {
-        try {
-            const allRecords = [...this.tasks, ...this.events];
-            localStorage.setItem('campuslife:records', JSON.stringify(allRecords));
-        } catch (error) {
-            console.error('Error saving to storage:', error);
-        }
-    }
-
-    addTask(task) {
-        this.tasks.push(task);
-        this.saveToStorage();
-    }
-
-    addEvent(event) {
-        this.events.push(event);
-        this.saveToStorage();
-    }
-
-    updateTask(updatedTask) {
-        const index = this.tasks.findIndex(task => task.id === updatedTask.id);
-        if (index !== -1) {
-            this.tasks[index] = updatedTask;
-            this.saveToStorage();
-        }
-    }
-
-    updateEvent(updatedEvent) {
-        const index = this.events.findIndex(event => event.id === updatedEvent.id);
-        if (index !== -1) {
-            this.events[index] = updatedEvent;
-            this.saveToStorage();
-        }
-    }
-
-    deleteTask(id) {
-        this.tasks = this.tasks.filter(task => task.id !== id);
-        this.saveToStorage();
-    }
-
-    deleteEvent(id) {
-        this.events = this.events.filter(event => event.id !== id);
-        this.saveToStorage();
-    }
-
-    getTasksByStatus() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        
-        const result = {
-            today: this.tasks.filter(task => {
-                const taskDate = new Date(task.dueDate);
-                taskDate.setHours(0, 0, 0, 0);
-                return taskDate.getTime() === today.getTime() && task.status !== 'Completed';
-            }),
-            upcoming: this.tasks.filter(task => {
-                const taskDate = new Date(task.dueDate);
-                taskDate.setHours(0, 0, 0, 0);
-                return taskDate.getTime() > today.getTime() && task.status !== 'Completed';
-            }),
-            completed: this.tasks.filter(task => {
-                const taskDate = new Date(task.dueDate);
-                taskDate.setHours(0, 0, 0, 0);
-                return task.status === 'Completed' || taskDate.getTime() < today.getTime();
-            })
-        };
-        
-        console.log('Task status breakdown:', result);
-        return result;
-    }
-
-    getEventsByStatus() {
-        const now = new Date();
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        
-        return {
-            today: this.events.filter(event => {
-                const eventDate = new Date(`${event.date}T${event.time}`);
-                const eventDateOnly = new Date(event.date);
-                eventDateOnly.setHours(0, 0, 0, 0);
-                return eventDateOnly.getTime() === today.getTime() && eventDate >= now;
-            }),
-            upcoming: this.events.filter(event => {
-                const eventDate = new Date(`${event.date}T${event.time}`);
-                const eventDateOnly = new Date(event.date);
-                eventDateOnly.setHours(0, 0, 0, 0);
-                return eventDateOnly.getTime() > today.getTime();
-            }),
-            completed: this.events.filter(event => {
-                const eventDate = new Date(`${event.date}T${event.time}`);
-                return eventDate < now;
-            })
-        };
-    }
-
-    setEditing(id, isEditing = true) {
-        this.currentEditingId = id;
-        this.isEditing = isEditing;
-    }
-
-    clearEditing() {
-        this.currentEditingId = null;
-        this.isEditing = false;
+function loadRecords() {
+    try {
+        console.log("Storage")
+        return JSON.parse(localStorage.getItem(KEY) || "[]");
+    } catch (error) {
+        console.error('Error loading records:', error);
+        return [];
     }
 }
 
-window.appState = new AppState();
+function saveRecords(records) {
+    try {
+        localStorage.setItem(KEY, JSON.stringify(records));
+    } catch (error) {
+        console.error('Error saving records:', error);
+    }
+}
+
+function saveRecord(newRecord) {
+    const records = loadRecords();
+    records.push(newRecord);
+    saveRecords(records);
+}
+
+function updateRecord(updatedRecord) {
+    const records = loadRecords();
+    const index = records.findIndex(record => record.id === updatedRecord.id);
+    if (index !== -1) {
+        records[index] = updatedRecord;
+        saveRecords(records);
+    }
+}
+
+function deleteRecord(id) {
+    const records = loadRecords();
+    const filteredRecords = records.filter(record => record.id !== id);
+    saveRecords(filteredRecords);
+}
+
+// JSON Import/Export functions
+function exportToJSON() {
+    const records = loadRecords();
+    const dataStr = JSON.stringify(records, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(dataBlob);
+    link.download = 'campuslife-data.json';
+    link.click();
+}
+
+function importFromJSON(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+
+                // Validate data structure
+                if (Array.isArray(data) && data.every(record =>
+                    record.id && record.type && record.createdAt
+                )) {
+                    saveRecords(data);
+                    resolve(data);
+                } else {
+                    reject(new Error('Invalid data structure'));
+                }
+            } catch (error) {
+                reject(new Error('Invalid JSON file'));
+            }
+        };
+        reader.readAsText(file);
+    });
+}
