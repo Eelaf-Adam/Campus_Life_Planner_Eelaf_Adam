@@ -1,4 +1,4 @@
-// --- Task State Management ---
+// Manage all task data 
 const appState = {
     // Load existing tasks or start with empty array
     tasks: JSON.parse(localStorage.getItem('tasks') || '[]'),
@@ -35,33 +35,32 @@ const appState = {
     }
 };
 
-// Mock search functions
+// Placeholder functions for search and clearing higlights 
 function searchTasks(pattern) { console.log(`Searching for: ${pattern}`); }
 function clearSearchHighlights() {}
 
-// --- Main DOM Content Loaded Logic ---
+// Main DOM Content Loaded Logic. Grap key DOM elements for modal, buttons, search, and columns
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
+
     const taskModal = document.getElementById('task-modal');
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskSearchInput = document.getElementById('task-search');
 
-    // Columns
     const todayColumn = document.getElementById('today-tasks');
     const upcomingColumn = document.getElementById('upcoming-tasks');
     const completedColumn = document.getElementById('completed-tasks');
 
-    // Counts
     const todayCount = document.querySelector('#tasks-today .count');
     const upcomingCount = document.querySelector('#tasks-upcoming .count');
     const completedCount = document.querySelector('#tasks-completed .count');
 
-    // Utility functions
+    // Open modal and freex page scrolling 
     window.openModal = function(id) {
         document.getElementById(id).classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
 
+    // Close modal , reset fields, and clear editing state
     window.closeModal = function(id) {
         document.getElementById(id).classList.add('hidden');
         document.body.style.overflow = 'auto';
@@ -70,12 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('add-task-btn').textContent = 'Add Task';
     }
 
-    // Generate unique ID
+    // Generate unique ID for new tasks
     function generateId() {
         return 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
 
-    // Added getTasksByStatus function to categorize tasks by dueDate and status
+    // Categorize tasks into today, upcoming, and completed
     appState.getTasksByStatus = function() {
         const today = new Date();
         today.setHours(0, 0, 0, 0); // normalize to start of day
@@ -85,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.tasks.forEach(task => {
             const due = new Date(task.dueDate);
-            due.setHours(0, 0, 0, 0); // normalize for comparison
+            due.setHours(0, 0, 0, 0); 
 
             if (task.status.toLowerCase() === 'done') {
                 completedTasks.push(task);
@@ -103,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    // Validation functions - FIXED: Check if external validation exists
+    // Validation task input fields 
     function validateTaskInput() {
         const title = document.getElementById('task-name').value.trim();
         const dueDate = document.getElementById('task-due-date').value;
@@ -112,9 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let errors = [];
 
-        // Check if external validation functions exist
         if (typeof validateField === 'function') {
-            // Use external validation file
             const titleValidation = validateField('title', title);
             const dateValidation = validateField('date', dueDate);
             const categoryValidation = validateField('category', tag);
@@ -125,12 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!categoryValidation.valid) errors.push(categoryValidation.message);
             if (!durationValidation.valid) errors.push(durationValidation.message);
 
-            // Check for duplicate words if function exists
             if (typeof hasDuplicateWords === 'function' && hasDuplicateWords(title)) {
                 errors.push('Title contains duplicate words');
             }
         } else {
-            // Basic validation if external file not loaded
             if (!title) errors.push('Task name is required');
             if (!dueDate) errors.push('Due date is required');
         }
@@ -141,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Create task card
+    // Create html card element for a task
     function createTaskCard(task) {
         const card = document.createElement('div');
         card.classList.add('task-card');
@@ -175,28 +170,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    // Render all tasks
+    // Render tasks 
     function renderTasks() {
-        // Clear columns
         [todayColumn, upcomingColumn, completedColumn].forEach(column => {
             if (column) column.innerHTML = '';
         });
 
         const tasksByStatus = appState.getTasksByStatus();
 
-        // Render today's tasks
         tasksByStatus.today.forEach(task => {
             const card = createTaskCard(task);
             if (todayColumn) todayColumn.appendChild(card);
         });
 
-        // Render upcoming tasks
         tasksByStatus.upcoming.forEach(task => {
             const card = createTaskCard(task);
             if (upcomingColumn) upcomingColumn.appendChild(card);
         });
 
-        // Render completed tasks
         tasksByStatus.completed.forEach(task => {
             const card = createTaskCard(task);
             if (completedColumn) completedColumn.appendChild(card);
@@ -205,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCounts();
     }
 
+    // Update task counts
     function updateCounts() {
         const tasksByStatus = appState.getTasksByStatus();
         if (todayCount) todayCount.textContent = tasksByStatus.today.length;
@@ -212,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (completedCount) completedCount.textContent = tasksByStatus.completed.length;
     }
 
+    // Clear modal input fields
     function clearModalFields() {
         document.getElementById('task-name').value = '';
         document.getElementById('task-description').value = '';
@@ -224,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Populate modal fields with task data for editing
     function populateModal(task) {
         document.getElementById('task-name').value = task.title;
         document.getElementById('task-description').value = task.description || '';
@@ -236,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Event Listeners
+    // Add and update task button logic
     addTaskBtn.addEventListener('click', () => {
         console.log('Add Task clicked'); // Debug
 
@@ -296,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal('task-modal');
     });
 
-    // Search functionality with regex
+    // Search input listener
     taskSearchInput.addEventListener('input', () => {
         const searchPattern = taskSearchInput.value;
 
@@ -309,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         searchTasks(searchPattern);
     });
 
-    // Global functions for task actions
+    // Edit task by ID
     window.editTask = function(id) {
         const task = appState.tasks.find(t => t.id === id);
         if (!task) {
@@ -323,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal('task-modal');
     };
 
+    // Delete task by ID
     window.deleteTask = function(id) {
         if (confirm('Are you sure you want to delete this task?')) {
             appState.deleteTask(id);
@@ -330,9 +325,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Auto-refresh every minute to update today/upcoming/completed status
     setInterval(() => {
         renderTasks();
     }, 60000);
 
+
+    // Apply dark theme based on saved theme
+  (function() {
+    const theme = localStorage.getItem('theme');
+    if(theme && theme.includes('dark')){
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  })();
+  
 });
