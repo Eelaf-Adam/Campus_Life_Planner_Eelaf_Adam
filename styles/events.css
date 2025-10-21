@@ -59,73 +59,46 @@ body {
   width: auto;
 }
 
-/* Sidebar */
-.new-sidebar {
-    width: 250px;
-    background: white;
-    color: #64748b;
-    padding: 2rem 0;
-    position: fixed;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
-    border-right: 1px solid #e2e8f0;
-}
-
-.logo-link {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-    text-decoration: none;
-}
-
-.logo-img {
-    height: 40px;
-    width: auto;
-}
-
 .new-sidebar nav {
-    padding: 0 1rem;
+  padding: 0 1rem;
 }
 
 .new-sidebar nav a {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1rem;
-    margin-bottom: 0.5rem;
-    color: #1e293b;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    font-weight: 400;
-    font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 400;
+  font-size: 0.95rem;
 }
 
 .new-sidebar nav a:hover {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
-    transform: translateX(2px);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  transform: translateX(2px);
 }
 
 .new-sidebar nav a.active {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .new-sidebar nav a i {
-    width: 18px;
-    height: 18px;
-    color: #1e293b;
+  width: 18px;
+  height: 18px;
+  color: #1e293b;
 }
 
 .new-sidebar nav a:hover i,
 .new-sidebar nav a.active i {
-    color: white;
+  color: white;
 }
-
 
 /* Header */
 .app-top-header {
@@ -472,9 +445,13 @@ border-radius: 8px;
 }
 
 /* Responsive */
+@media (max-width: 1100px) { .content { margin-left: 220px; padding:1rem; } }
 @media (max-width: 768px) {
-.kanban-board {
-  grid-template-columns: 1fr;
+    .new-sidebar { position:relative; width:100%; height:auto; border-right:none; padding:1rem; display:block; }
+    .content { margin-left:0; padding:1rem; }
+    .setting-item { flex-direction:column; align-items:flex-start; }
+    .setting-item span, .setting-item label { min-width:auto; width:100%; }
+    .settings-section { padding:1rem; margin:1rem; }
 }
 
 .app-top-header {
@@ -487,3 +464,4 @@ border-radius: 8px;
   margin-left: 0; 
 }
 }
+
