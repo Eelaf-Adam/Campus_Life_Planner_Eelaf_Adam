@@ -1,3 +1,4 @@
+// Compile user input into a regex
 function compileRegex(input, flags = 'i') {
     try {
         return input ? new RegExp(input, flags) : null;
@@ -7,11 +8,13 @@ function compileRegex(input, flags = 'i') {
     }
 }
 
+// Highlight matches in text
 function highlightMatches(text, regex) {
     if (!regex) return text;
     return text.replace(regex, match => `<mark>${match}</mark>`);
 }
 
+// Search tasks with regex
 function searchTasks(searchPattern) {
     if (!searchPattern) return;
     
@@ -22,6 +25,7 @@ function searchTasks(searchPattern) {
     const upcomingColumn = document.getElementById('upcoming-tasks');
     const completedColumn = document.getElementById('completed-tasks');
     
+    // Loops through all colums and cards
     [todayColumn, upcomingColumn, completedColumn].forEach(column => {
         if (!column) return;
         
@@ -31,7 +35,6 @@ function searchTasks(searchPattern) {
             
             if (regex.test(title) || regex.test(tag)) {
                 card.style.display = '';
-
                 highlightCardMatches(card, regex);
             } else {
                 card.style.display = 'none';
@@ -40,6 +43,7 @@ function searchTasks(searchPattern) {
     });
 }
 
+// Search events with regex
 function searchEvents(searchPattern) {
     if (!searchPattern) return;
     
@@ -59,7 +63,6 @@ function searchEvents(searchPattern) {
             
             if (regex.test(title) || regex.test(tag)) {
                 card.style.display = '';
-
                 highlightCardMatches(card, regex);
             } else {
                 card.style.display = 'none';
@@ -68,6 +71,7 @@ function searchEvents(searchPattern) {
     });
 }
 
+// Highlight matches in a card
 function highlightCardMatches(card, regex) {
     const title = card.querySelector('.task-header h4, .event-header h4');
     const tag = card.querySelector('.task-category, .event-category');
@@ -81,6 +85,7 @@ function highlightCardMatches(card, regex) {
     });
 }
 
+// Clear search highlights
 function clearSearchHighlights() {
     const marks = document.querySelectorAll('mark');
     marks.forEach(mark => {
