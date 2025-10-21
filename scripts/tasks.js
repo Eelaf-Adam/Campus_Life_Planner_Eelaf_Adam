@@ -1,3 +1,45 @@
+// --- Task State Management ---
+const appState = {
+    // Load existing tasks or start with empty array
+    tasks: JSON.parse(localStorage.getItem('tasks') || '[]'),
+    isEditing: false,
+    currentEditingId: null,
+
+    saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    },
+
+    addTask(task) {
+        this.tasks.push(task);
+        this.saveTasks();
+    },
+
+    updateTask(updatedTask) {
+        this.tasks = this.tasks.map(t => t.id === updatedTask.id ? updatedTask : t);
+        this.saveTasks();
+    },
+
+    deleteTask(id) {
+        this.tasks = this.tasks.filter(t => t.id !== id);
+        this.saveTasks();
+    },
+
+    setEditing(id, isEditing) {
+        this.currentEditingId = id;
+        this.isEditing = isEditing;
+    },
+
+    clearEditing() {
+        this.currentEditingId = null;
+        this.isEditing = false;
+    }
+};
+
+// Mock search functions
+function searchTasks(pattern) { console.log(`Searching for: ${pattern}`); }
+function clearSearchHighlights() {}
+
+// --- Main DOM Content Loaded Logic ---
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const taskModal = document.getElementById('task-modal');
@@ -13,10 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const todayCount = document.querySelector('#tasks-today .count');
     const upcomingCount = document.querySelector('#tasks-upcoming .count');
     const completedCount = document.querySelector('#tasks-completed .count');
-
-    // Initialize
-    renderTasks();
-    updateCounts();
 
     // Utility functions
     window.openModal = function(id) {
@@ -65,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    // Validation functions
+    // Validation functions - FIXED: Check if external validation exists
     function validateTaskInput() {
         const title = document.getElementById('task-name').value.trim();
         const dueDate = document.getElementById('task-due-date').value;
@@ -74,30 +112,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let errors = [];
 
-        // Title validation
-        if (!title) {
-            errors.push('Task name is required');
-        } else if (!patterns.title.test(title)) {
-            errors.push('Title cannot have leading/trailing spaces');
-        } else if (hasDuplicateWords(title)) {
-            errors.push('Title contains duplicate words');
-        }
+        // Check if external validation functions exist
+        if (typeof validateField === 'function') {
+            // Use external validation file
+            const titleValidation = validateField('title', title);
+            const dateValidation = validateField('date', dueDate);
+            const categoryValidation = validateField('category', tag);
+            const durationValidation = validateField('duration', duration);
 
-        // Date validation
-        if (!dueDate) {
-            errors.push('Due date is required');
-        } else if (!patterns.date.test(dueDate)) {
-            errors.push('Date must be in YYYY-MM-DD format');
-        }
+            if (!titleValidation.valid) errors.push(titleValidation.message);
+            if (!dateValidation.valid) errors.push(dateValidation.message);
+            if (!categoryValidation.valid) errors.push(categoryValidation.message);
+            if (!durationValidation.valid) errors.push(durationValidation.message);
 
-        // Tag validation
-        if (tag && !patterns.tag.test(tag)) {
-            errors.push('Category can only contain letters, spaces, and hyphens');
-        }
-
-        // Duration validation
-        if (duration && !patterns.duration.test(duration)) {
-            errors.push('Duration must be a valid number');
+            // Check for duplicate words if function exists
+            if (typeof hasDuplicateWords === 'function' && hasDuplicateWords(title)) {
+                errors.push('Title contains duplicate words');
+            }
+        } else {
+            // Basic validation if external file not loaded
+            if (!title) errors.push('Task name is required');
+            if (!dueDate) errors.push('Due date is required');
         }
 
         return {
@@ -144,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTasks() {
         // Clear columns
         [todayColumn, upcomingColumn, completedColumn].forEach(column => {
-            column.innerHTML = '';
+            if (column) column.innerHTML = '';
         });
 
         const tasksByStatus = appState.getTasksByStatus();
@@ -152,19 +187,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render today's tasks
         tasksByStatus.today.forEach(task => {
             const card = createTaskCard(task);
-            todayColumn.appendChild(card);
+            if (todayColumn) todayColumn.appendChild(card);
         });
 
         // Render upcoming tasks
         tasksByStatus.upcoming.forEach(task => {
             const card = createTaskCard(task);
-            upcomingColumn.appendChild(card);
+            if (upcomingColumn) upcomingColumn.appendChild(card);
         });
 
         // Render completed tasks
         tasksByStatus.completed.forEach(task => {
             const card = createTaskCard(task);
-            completedColumn.appendChild(card);
+            if (completedColumn) completedColumn.appendChild(card);
         });
 
         updateCounts();
@@ -172,9 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateCounts() {
         const tasksByStatus = appState.getTasksByStatus();
-        todayCount.textContent = tasksByStatus.today.length;
-        upcomingCount.textContent = tasksByStatus.upcoming.length;
-        completedCount.textContent = tasksByStatus.completed.length;
+        if (todayCount) todayCount.textContent = tasksByStatus.today.length;
+        if (upcomingCount) upcomingCount.textContent = tasksByStatus.upcoming.length;
+        if (completedCount) completedCount.textContent = tasksByStatus.completed.length;
     }
 
     function clearModalFields() {
@@ -203,6 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event Listeners
     addTaskBtn.addEventListener('click', () => {
+        console.log('Add Task clicked'); // Debug
+
         const validation = validateTaskInput();
 
         if (!validation.valid) {
@@ -234,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     updatedAt: new Date().toISOString()
                 };
                 appState.updateTask(updatedTask);
+                console.log('Task updated:', updatedTask); // Debug
             }
         } else {
             // Add new task
@@ -251,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 updatedAt: new Date().toISOString()
             };
             appState.addTask(task);
+            console.log('Task added:', task); // Debug
         }
 
         renderTasks();
@@ -295,4 +334,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         renderTasks();
     }, 60000);
+
 });
