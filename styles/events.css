@@ -185,7 +185,7 @@ body {
   background-color: #1e4fc4;
 }
 
-/* User avatar */
+/* User avater */
 .profile-avatar {
   background: #2563eb;
   color: white;
@@ -292,6 +292,7 @@ body {
   font-weight: 700;
 }
 
+
 .event-meta {
   display: flex;
   align-items: center;
@@ -316,6 +317,7 @@ body {
   font-size: 0.75rem;
   font-weight: 600;
 }
+
 
 /* Modal */
 .modal-overlay {
@@ -360,9 +362,13 @@ body {
 
 .modal-content input,
 .modal-content select {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+padding: 0.5rem;
+border: 1px solid #ddd;
+border-radius: 8px;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .close-btn {
@@ -372,37 +378,38 @@ body {
   cursor: pointer;
 }
 
+
 .event-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .edit-btn, .delete-btn {
-  padding: 0.25rem 0.5rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .edit-btn {
-  background: #2563eb;
-  color: white;
+    background: #2563eb;
+    color: white;
 }
 
 .edit-btn:hover {
-  background: #1e4fc4;
+    background: #1e4fc4;
 }
 
 .delete-btn {
-  background: #ef4444;
-  color: white;
+    background: #ef4444;
+    color: white;
 }
 
 .delete-btn:hover {
-  background: #dc2626;
+    background: #dc2626;
 }
 
 /* Dark theme */
@@ -412,132 +419,44 @@ body {
 }
 
 .dark .new-sidebar { 
-  background: #1e293b;
-  border-right: 1px solid #334155; 
+    background: #1e293b;
+     border-right: 1px 
+     solid #334155; 
 }
-
 .dark .new-sidebar nav a { 
-  color: #e2e8f0; 
+    color: #e2e8f0; 
 }
 
 .dark .new-sidebar nav a.active,
 .dark .new-sidebar nav a:hover { 
-  background: linear-gradient(135deg, #3b82f6, #2563eb); 
-  color: #fff; 
+    background: linear-gradient(135deg, #3b82f6, #2563eb); 
+    color: #fff; 
 }
 
 .dark .content { 
-  background: #1e293b; 
-  color: #f8fafc; 
+    background: #1e293b; 
+    color: #f8fafc; 
 }
 
-.dark input, 
-.dark select, 
-.dark button { 
-  background: #475569; 
-  color: #f8fafc; 
-  border: 1px solid #64748b; 
+.dark input, .dark select, .dark button { 
+    background: #475569; 
+    color: #f8fafc; 
+    border: 1px solid #64748b; 
 }
 
-/* =====================================================
-   Responsive Enhancements (Additions)
-   ===================================================== */
-
-/* Tablet view */
-@media (max-width: 1024px) {
-  .new-sidebar {
-    width: 200px;
-  }
-
-  .content {
-    margin-left: 200px;
-    padding: 1rem;
-  }
-
-  .kanban-board {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
-
-/* Mobile view */
+/* Responsive */
 @media (max-width: 768px) {
-  body {
-    flex-direction: column;
-  }
-
-  .new-sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    box-shadow: none;
-    border-right: none;
-    border-bottom: 1px solid var(--border-light);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem;
-  }
-
-  .new-sidebar nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0;
-  }
-
-  .new-sidebar nav a {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .content {
-    margin-left: 0;
-    padding: 1rem;
-  }
-
-  .app-top-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-  }
-
-  .search-bar {
-    max-width: 100%;
-  }
-
-  .kanban-board {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-box {
-    width: 90%;
-  }
+.kanban-board {
+  grid-template-columns: 1fr;
 }
 
-/* Very small screens */
-@media (max-width: 480px) {
-  .event-card {
-    padding: 0.75rem;
-  }
+.app-top-header {
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
 
-  .event-header h4 {
-    font-size: 0.9rem;
-  }
-
-  .event-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-
-  .event-category {
-    font-size: 0.7rem;
-  }
-
-  .add-event-btn {
-    width: 32px;
-    height: 32px;
-  }
+.content {
+  margin-left: 0; 
+}
 }
