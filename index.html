@@ -9,11 +9,13 @@
 </head>
 <body>
 
-     <!-- Header -->
+    <!-- Header Section -->
     <header class="app-header">
         <div class="logo-link">
             <img src="assets/Logo2.png" alt="CampusLife Logo" class="logo-img">
         </div>
+
+        <!-- Navigation Links -->
         <nav class="header-nav">
             <a href="dashboard.html">Dashboard</a>
             <a href="index.html" class="active">About</a>
@@ -30,14 +32,15 @@
         <p>Manage your tasks, events, and academic life seamlessly</p>
     </section>
 
-    <!-- CTA Section -->
+    
+    <!-- The call to action (CTA) Section -->
     <section class="cta-background">
         <h2>Organizing your semester?</h2>
         <p>CampusLife delivers speed and organization for your academic journey</p>
         <a href="dashboard.html" class="cta-button">Get Your Life Together 🚀 <i data-lucide="arrow-right"></i> </a>
     </section>
 
-    <!-- Developer Section -->
+    <!-- Developer Information Section -->
     <section class="dev-section card">
         <h2><i data-lucide="wrench"></i>Developer Information</h2>
         <div class="dev-info-list">
@@ -47,13 +50,30 @@
         </div>
     </section>
 
-    <!-- Footer -->
+
+    <!-- Footer Section -->
         <footer class="app-footer">
         <p> 📍 Kiglai, Rwanda</p>
         <p> 🏫 African Leadership University</p>
         <p class="copyright">&copy; <script>document.write(new Date().getFullYear())</script> CampusLife. All rights reserved.</p>
     </footer>
 
-    <script>lucide.createIcons();</script>
+
+    <!-- Theme initialization script -->
+    <script>
+    (function() {
+        const theme = localStorage.getItem('theme');
+        if(theme && theme.includes('dark')){
+        document.documentElement.classList.add('dark');
+        } else {
+        document.documentElement.classList.remove('dark');
+        }
+    })();
+    </script>
+
+    <script src="scripts/state.js"></script>
+    <script src="scripts/validators.js"></script>
+    <script src="scripts/search.js"></script>
+    <script>lucide.createIcons();</script> 
 </body>
 </html>
