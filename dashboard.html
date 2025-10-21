@@ -9,6 +9,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body class="app-layout">
+
+    <!-- Sidebar Section -->
   <aside class="new-sidebar">
     <a href="dashboard.html" class="logo-link">
       <img src="assets/Logo2.png" alt="CampusLife Logo" class="logo-img">
@@ -23,13 +25,15 @@
     </nav>
   </aside>
 
-    <!-- Main & Header -->
+  <!-- Main Content Section -->
   <main class="content">
+
+  <!-- Header Section -->
     <header class="page-header">
       <h1>Dashboard</h1>
     </header>
 
-    <!-- user welcoming -->
+      <!-- Welcome Section -->
     <section class="welcome-section">
       <div class="welcome-illustration">
         <img src="assets/user.png" alt="Student" class="student-illustration">
@@ -37,7 +41,6 @@
       <h2 class="welcome-title">Hello, Student</h2>
       <p class="welcome-text">Manage your tasks and events — your weekly target shows remaining time below.</p>
 
-        <!-- Add task -->
       <div class="action-cards-grid">
         <div class="action-card task-card">
           <h3>Add Tasks</h3>
@@ -45,7 +48,6 @@
           <a href="tasks.html" class="action-button">Add Now</a>
         </div>
 
-         <!-- Add event -->
         <div class="action-card event-card">
           <h3>Add Events</h3>
           <p>Keep track of campus events and deadlines</p>
@@ -54,6 +56,7 @@
       </div>
     </section>
 
+      <!-- Welcome Overview Section -->
     <section id="dashboard" class="dashboard-overview" aria-labelledby="dashboard-heading">
       <h2 id="dashboard-heading">Dashboard Overview</h2>
 
@@ -64,6 +67,7 @@
         <div class="stat-card"><strong id="top-tag">—</strong><span>Top Tag</span></div>
       </div>
 
+      <!-- Weekly cap message -->
       <div id="dashboard-cap-live" class="cap-status" role="status" aria-live="polite">No weekly cap set</div>
 
       <div class="trend-card" aria-label="Activity trend">
