@@ -99,7 +99,7 @@ CampusLife-Planner_Eelaf_Adam/
 └── seed.json                   # Sample dataset for testing import/export
 ```
 
-##  Regex Patterns                                   |
+##  Regex Patterns                                   
 
 | **Pattern**     | **Matches Example**                | **Use Case**                                             |                                       |
 | --------------- | ---------------------------------- | -------------------------------------------------------- | ------------------------------------- |
@@ -121,7 +121,7 @@ Color Contrast: Meets WCAG AA contrast ratio for readability.
 
 Mobile Friendly: Fully responsive design scales to any device width
 
-## ⌨️ Keyboard Map
+##  Keyboard Map
 CampusLife Planner supports full keyboard navigation for accessibility and efficiency.
 
 | **Key**       | **Action**                                     |
