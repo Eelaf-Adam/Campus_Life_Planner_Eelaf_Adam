@@ -1,11 +1,11 @@
-// --- Mock Data and External Dependencies (Simplified for event logic) ---
-// You will still need to define these for the code to run in your browser environment.
+// Manage all event data 
 const appState = {
-    // Load existing events or start with a sample event for testing
+    // Load existing events from localStorage 
     events: JSON.parse(localStorage.getItem('events') || '[]'),
     isEditing: false,
     currentEditingId: null,
 
+    // Save current events array to localStorage
     saveEvents() {
         localStorage.setItem('events', JSON.stringify(this.events));
     },
@@ -26,9 +26,8 @@ const appState = {
         this.saveEvents();
     },
 
-    /**
-     * CORE LOGIC: Filters all events into Today, Upcoming, and Completed arrays.
-     */
+
+    // Filters all events into Today, upcoming, and completed 
     getEventsByStatus() {
         const events = {
             today: [],
@@ -66,22 +65,18 @@ const appState = {
     }
 };
 
-// Mock search functions (kept for structure)
+// Mock search functions 
 function searchEvents(pattern) { console.log(`Searching for: ${pattern}`); }
 function clearSearchHighlights() {}
 
 
-// --- UTILITY FUNCTIONS (The main area of focus for event sorting) ---
-
-/**
- * Calculates time remaining and formats it (e.g., '7103h 18m remaining').
- */
+// Calculates remaining time untill an event 
 function calculateTimeRemaining(date, time) {
     const eventDate = new Date(`${date}T${time}`);
     const now = new Date();
     const diff = eventDate - now;
 
-    if (diff < 0) return 'Event has passed'; // Completed events
+    if (diff < 0) return 'Event has passed'; 
 
     let totalSeconds = Math.floor(diff / 1000);
     const days = Math.floor(totalSeconds / (3600 * 24));
@@ -89,72 +84,62 @@ function calculateTimeRemaining(date, time) {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
 
-    // Format to match the screenshot style (or similar time duration)
     let parts = [];
     if (days > 0) parts.push(`${days}d`);
-    if (hours > 0 || days > 0) parts.push(`${hours}h`); // Show hours if non-zero or if days are present
-    parts.push(`${minutes}m`); // Always show minutes for precision
+    if (hours > 0 || days > 0) parts.push(`${hours}h`); 
+    parts.push(`${minutes}m`); 
 
     return `${parts.join(' ')} remaining`;
 }
 
-/**
- * Formats the date to look like the screenshot (e.g., 'Aug 12, 12:09 PM').
- */
+
+// Formats event date and time for display
 function formatDateTime(date) {
     return date.toLocaleString('en-US', {
         month: 'short',
         day: 'numeric',
         hour: 'numeric',
         minute: '2-digit',
-        hour12: true // Ensure AM/PM format
+        hour12: true 
     });
 }
 
-/**
- * FIX: The crucial function to determine the event's column status.
- * This correctly compares dates while ignoring time for "Today".
- */
+
+// Determine event status into today, upcoming, or completed 
 function getEventStatus(eventDate) {
     const now = new Date();
 
-    // 1. Check for Completed
     if (eventDate < now) return 'Completed';
 
-    // 2. Check for Today (Compare only Year, Month, Day)
     const eventDay = eventDate.toDateString();
     const today = now.toDateString();
 
     if (eventDay === today) return 'Today';
 
-    // 3. Otherwise, it's Upcoming
     return 'Upcoming';
 }
 
 
-// --- Main DOM Content Loaded Logic ---
+// Main DOM content loaded logic
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
+
     const eventModal = document.getElementById('event-modal');
     const addEventBtn = document.getElementById('add-event-btn');
     const eventSearchInput = document.getElementById('event-search');
 
-    // Column elements
     const todayEvents = document.getElementById('today-events');
     const upcomingEvents = document.getElementById('upcoming-events');
     const completedEvents = document.getElementById('completed-events');
 
-    // Counts
-    // Updated selector to be more robust
     const todayCount = document.querySelector('#events-today .count') || document.querySelector('.event-column:nth-child(1) .count');
     const upcomingCount = document.querySelector('#events-upcoming .count') || document.querySelector('.event-column:nth-child(2) .count');
     const completedCount = document.querySelector('#events-completed .count') || document.querySelector('.event-column:nth-child(3) .count');
 
-    // Initialize
+    // Initialize rendering and counts
     renderEvents();
     updateCounts();
 
-    // Utility functions
+    // Modal helper function
     window.openModal = function(id) {
         document.getElementById(id).classList.remove('hidden');
         document.body.style.overflow = 'hidden';
@@ -165,19 +150,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let errors = [];
 
-        // Check if external validation functions exist
         if (typeof validateField === 'function') {
-            // Use external validation file
             const titleValidation = validateField('title', title);
 
             if (!titleValidation.valid) errors.push(titleValidation.message);
 
-            // Check for duplicate words if function exists
             if (typeof hasDuplicateWords === 'function' && hasDuplicateWords(title)) {
                 errors.push('Title contains duplicate words');
             }
         } else {
-            // Basic validation if external file not loaded
             if (!title) errors.push('Task name is required');
         }
 
@@ -195,12 +176,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('add-event-btn').textContent = 'Add Event';
     }
 
-    // Generate unique ID
     function generateId() {
         return 'event_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
 
-    // Create event card
+    // Event card creation
     function createEventCard(event) {
         const card = document.createElement('div');
         card.classList.add('event-card');
@@ -211,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = getEventStatus(eventDate);
         const formattedDate = formatDateTime(eventDate);
 
-        // NOTE: You might need to add CSS classes like .status-upcoming, .status-today etc.
         card.innerHTML = `
             <div class="event-header">
                 <h4>${event.title}</h4>
@@ -235,28 +214,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    // Render all events
+    // Rendering events
     function renderEvents() {
-        // Clear columns
         [todayEvents, upcomingEvents, completedEvents].forEach(column => {
-            if (column) column.innerHTML = ''; // Null check
+            if (column) column.innerHTML = ''; 
         });
 
         const eventsByStatus = appState.getEventsByStatus();
 
-        // Render today's events
         eventsByStatus.today.forEach(event => {
             const card = createEventCard(event);
             if (todayEvents) todayEvents.appendChild(card);
         });
 
-        // Render upcoming events
         eventsByStatus.upcoming.forEach(event => {
             const card = createEventCard(event);
             if (upcomingEvents) upcomingEvents.appendChild(card);
         });
 
-        // Render completed events
         eventsByStatus.completed.forEach(event => {
             const card = createEventCard(event);
             if (completedEvents) completedEvents.appendChild(card);
@@ -288,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('event-category').value = event.tag;
     }
 
-    // Event Listeners for Add/Update
     addEventBtn.addEventListener('click', () => {
         const validation = validateTaskInput();
 
@@ -296,21 +270,18 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(validation.errors.join('\n'));
             return;
         }
-        // Since you removed regex, assuming basic validation is handled or unnecessary here
         const title = document.getElementById('event-name').value.trim();
         const description = document.getElementById('event-description').value.trim();
         const date = document.getElementById('event-date').value;
         const time = document.getElementById('event-time').value;
         const tag = document.getElementById('event-category').value.trim() || 'General';
 
-        // Basic check for required fields
         if (!title || !date || !time) {
              alert('Event name, date, and time are required.');
              return;
         }
 
         if (appState.isEditing && appState.currentEditingId) {
-            // Update existing event
             const existingEvent = appState.events.find(e => e.id === appState.currentEditingId);
             if (existingEvent) {
                 const updatedEvent = {
@@ -325,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 appState.updateEvent(updatedEvent);
             }
         } else {
-            // Add new event
             const event = {
                 id: generateId(),
                 type: 'event',
@@ -344,7 +314,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal('event-modal');
     });
 
-    // Search functionality
     eventSearchInput.addEventListener('input', () => {
         const searchPattern = eventSearchInput.value;
 
@@ -357,7 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
         searchEvents(searchPattern);
     });
 
-    // Global functions for event actions
     window.editEvent = function(id) {
         const event = appState.events.find(e => e.id === id);
         if (!event) {
@@ -378,8 +346,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Auto-refresh every minute to update event status
     setInterval(() => {
         renderEvents();
     }, 60000);
+
+
+    // Dark theme
+  (function() {
+    const theme = localStorage.getItem('theme');
+    if(theme && theme.includes('dark')){
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  })();
+
 });
