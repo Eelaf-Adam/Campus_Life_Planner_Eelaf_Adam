@@ -7,9 +7,14 @@
     <link rel="stylesheet" href="styles/tasks.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="app-layout"> <aside class="new-sidebar"> <a href="dashboard.html" class="logo-link">
-    <img src="assets/Logo2.png" alt="CampusLife Logo" class="logo-img">
-</a>
+<body class="app-layout">
+    
+    <!-- Sidebar Section -->
+    <aside class="new-sidebar"> 
+        <a href="dashboard.html" class="logo-link">
+            <img src="assets/Logo2.png" alt="CampusLife Logo" class="logo-img">
+        </a>
+
     <nav>
         <a href="dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
         <a href="index.html"><i data-lucide="info"></i>About</a>
@@ -19,10 +24,11 @@
     </nav>
 </aside>
 
-<!-- Main Content-->
+
+<!-- Main Content Section -->
 <main class="content">
 
-    <!-- Header -->
+    <!-- Header Section -->
     <header class="app-top-header">
         <h1>Tasks</h1>
         <div class="search-bar">
@@ -38,9 +44,9 @@
         </div>
     </header>
 
-
-    <!-- Kanban Board-->
+    <!-- Kanban Board Section -->
     <section class="kanban-board">
+
         <!-- Today -->
         <div class="kanban-column" id="tasks-today">
             <div class="column-header">
@@ -74,7 +80,8 @@
     </section>
 </main>
 
-<!-- Add Task Modal-->
+
+<!-- Add Task Modal Section -->
 <div id="task-modal" class="modal-overlay hidden">
     <div class="modal-box">
         <div class="modal-header">
