@@ -445,14 +445,106 @@ border-radius: 8px;
 }
 
 /* Responsive */
-@media (max-width: 1100px) { .content { margin-left: 220px; padding:1rem; } }
-@media (max-width: 768px) {
-    .new-sidebar { position:relative; width:100%; height:auto; border-right:none; padding:1rem; display:block; }
-    .content { margin-left:0; padding:1rem; }
-    .setting-item { flex-direction:column; align-items:flex-start; }
-    .setting-item span, .setting-item label { min-width:auto; width:100%; }
-    .settings-section { padding:1rem; margin:1rem; }
+
+/* Tablet view */
+@media (max-width: 1024px) {
+  .new-sidebar {
+    width: 200px;
+  }
+
+  .content {
+    margin-left: 200px;
+    padding: 1rem;
+  }
+
+  .kanban-board {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }
+
+/* Mobile view */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .new-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .new-sidebar nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .new-sidebar nav a {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .app-top-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .search-bar {
+    max-width: 100%;
+  }
+
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-box {
+    width: 90%;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .event-card {
+    padding: 0.75rem;
+  }
+
+  .event-header h4 {
+    font-size: 0.9rem;
+  }
+
+  .event-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .event-category {
+    font-size: 0.7rem;
+  }
+
+  .add-event-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+
 
 .app-top-header {
   flex-direction: column;
