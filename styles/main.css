@@ -1,6 +1,5 @@
 
-
-/* Global rest */
+/* Global rest and base */
 * {
     margin: 0;
     padding: 0;
@@ -25,7 +24,7 @@ a:hover {
     color: #2563eb;
 }
 
-/* Lucide Icon Styling */
+
 svg {
     width: 20px;
     height: 20px;
@@ -44,7 +43,7 @@ svg {
     margin-bottom: 1.5rem;
 }
 
-/* landing page styling  */
+
 .landing-page {
     display: flex;
     flex-direction: column;
@@ -56,7 +55,7 @@ svg {
     width: 100%;
 }
 
-/* Header - logo */
+
 .landing-page-header {
     width: 100%;
     max-width: 850px;
@@ -64,7 +63,7 @@ svg {
     margin-bottom: 2rem;
 }
 
-/* logo center */
+
 .landing-content-wrapper {
     display: flex;
     flex-direction: column;
@@ -73,7 +72,7 @@ svg {
     max-width: 850px;
 }
 
-/* logo main page*/
+
 .landing-logo-link {
     display: inline-block;
 }
@@ -103,7 +102,7 @@ svg {
     line-height: 1.6;
 }
 
-/* CTA background */
+
 .cta-background {
     background-color: #2563eb;
     color: white;
@@ -209,7 +208,7 @@ svg {
     min-width: 18px;
 }
 
-/* Header Styles */
+/* Header and navigation */
 .app-header {
     display: flex;
     align-items: center;
@@ -225,7 +224,7 @@ svg {
 }
 
 .logo-img {
-    height: 40px; /* Adjust as needed */
+    height: 40px; 
 }
 
 .header-nav {
@@ -244,7 +243,7 @@ svg {
     color: #2563eb;
 }
 
-/* Footer Styles */
+/* Footer */
 .app-footer {
     text-align: center;
     padding: 1rem 0;
@@ -262,8 +261,51 @@ svg {
 }
 
 
+/* Dark theme */
+.dark body {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
 
-/* Tablet view */
+.dark .app-header {
+  background-color: #1e293b;
+  color: #f8fafc;
+  box-shadow: none;
+}
+
+.dark .header-nav a {
+  color: #e2e8f0;
+}
+
+.dark .header-nav a:hover,
+.dark .header-nav a.active {
+  color: #3b82f6;
+}
+
+.dark .card,
+.dark .dev-section {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
+.dark .cta-background {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #f8fafc;
+}
+
+.dark .cta-button {
+  background-color: #f8fafc;
+  color: #2563eb;
+}
+
+.dark .app-footer {
+  background-color: #1e293b;
+  color: #cbd5e1;
+}
+
+
+
+/* Responsive */
 @media (max-width: 1200px) {
     .kanban-board {
         /* Allow up to 3 columns, minimum 280px */
@@ -273,7 +315,7 @@ svg {
     }
 }
 
-/* Mobile view */
+
 @media (max-width: 768px) {
     .app-layout {
         flex-direction: column;
@@ -285,13 +327,11 @@ svg {
         padding: 1rem 1.5rem;
         border-right: none;
         border-bottom: 1px solid #e2e8f0;
-
-        /* Hide navigation links by default for mobile */
         display: none;
     }
 } 
 
-/* smaller mobile view */
+
 @media (max-width: 500px) {
     .app-top-header {
         flex-direction: column;
@@ -299,7 +339,7 @@ svg {
     }
 
     .app-top-header h1 {
-        display: none; /* Hide H1 on very small screens to save space */
+        display: none; 
     }
 
     .header-actions {
@@ -317,7 +357,6 @@ svg {
     }
 }
 
-/* scrollbars */
 .content::-webkit-scrollbar {
     width: 8px;
 }
@@ -350,16 +389,16 @@ html {
     top: 0;
 }
 
-/* Centering styles for sections */
+
 .hero-section,
 .cta-background,
 .dev-section {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically if needed */
-    text-align: center; /* Center text */
-    padding: 2rem; /* Add padding for spacing */
-    max-width: 850px; /* Limit width for better readability */
-    margin: 0 auto; /* Center the section in the page */
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    padding: 2rem; 
+    max-width: 850px; 
+    margin: 0 auto; 
 }
