@@ -1,5 +1,5 @@
 
-/* global styling & variables */
+/* Global styling & variables */
 :root {
     --primary-blue: #2563eb; 
     --secondary-blue: #1e4fc4;
@@ -21,6 +21,7 @@ body {
     min-height: 100vh;
 }
 
+/* Layout */
 .app-layout {
     display: flex;
     width: 100%;
@@ -33,6 +34,7 @@ body {
     margin-left: 250px; 
 }
 
+/* Sidebar */
 .new-sidebar {
     width: 250px;
     background: white;
@@ -101,7 +103,7 @@ body {
 
 
 
-/* header */
+/* Header */
 .app-top-header {
     display: flex;
     align-items: center;
@@ -119,6 +121,7 @@ body {
     margin: 0;
 }
 
+/* Search */
 .search-bar {
     display: flex;
     align-items: center;
@@ -144,6 +147,7 @@ body {
     gap: 1rem;
 }
 
+/* Buttons */
 .icon-btn {
     width: 20px;
     height: 20px;
@@ -205,6 +209,7 @@ body {
     background-color: #1e4fc4;
 }
 
+/* User avater */
 .profile-avatar {
     background: #2563eb;
     color: white;
@@ -218,7 +223,7 @@ body {
 }
 
 
-/* kanban board */
+/* Kanban board */
 .kanban-board {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));    
@@ -284,7 +289,7 @@ body {
   border: 0;
 }
 
-/* task card */
+/* Task card */
 .task-card {
     background: #ffffff;
     border-radius: 16px;
@@ -335,8 +340,6 @@ body {
     color: #15803d;
 }
 
-
-/* task meta */
 .task-meta {
     display: flex;
     align-items: center;
@@ -376,7 +379,7 @@ body {
 .priority-critical { background: #ef4444; }
 
 
-/* modal */
+/* Modal */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -434,7 +437,6 @@ body {
 }
 
 
-/* task actions */
 .task-actions {
     display: flex;
     gap: 0.5rem;
@@ -468,8 +470,40 @@ body {
     background: #dc2626;
 }
 
+/* Dark theme */
+.dark {
+  background: #0f172a; 
+  color: #f8fafc;
+}
 
-/*  responsive */
+.dark .new-sidebar { 
+    background: #1e293b;
+     border-right: 1px 
+     solid #334155; 
+}
+.dark .new-sidebar nav a { 
+    color: #e2e8f0; 
+}
+
+.dark .new-sidebar nav a.active,
+.dark .new-sidebar nav a:hover { 
+    background: linear-gradient(135deg, #3b82f6, #2563eb); 
+    color: #fff; 
+}
+
+.dark .content { 
+    background: #1e293b; 
+    color: #f8fafc; 
+}
+
+.dark input, .dark select, .dark button { 
+    background: #475569; 
+    color: #f8fafc; 
+    border: 1px solid #64748b; 
+}
+
+
+/*  Responsive */
 @media (max-width: 768px) {
   .kanban-board {
     grid-template-columns: 1fr;
