@@ -1,8 +1,8 @@
-const KEY = "campuslife:records";
+const KEY = "tasks";
 
-// function to load app record
 function loadRecords() {
     try {
+        console.log("Storage")
         return JSON.parse(localStorage.getItem(KEY) || "[]");
     } catch (error) {
         console.error('Error loading records:', error);
@@ -10,7 +10,6 @@ function loadRecords() {
     }
 }
 
-// function to save app record 
 function saveRecords(records) {
     try {
         localStorage.setItem(KEY, JSON.stringify(records));
@@ -19,14 +18,12 @@ function saveRecords(records) {
     }
 }
 
-// function to update app record 
 function saveRecord(newRecord) {
     const records = loadRecords();
     records.push(newRecord);
     saveRecords(records);
 }
 
-// function to update app record
 function updateRecord(updatedRecord) {
     const records = loadRecords();
     const index = records.findIndex(record => record.id === updatedRecord.id);
@@ -36,14 +33,13 @@ function updateRecord(updatedRecord) {
     }
 }
 
-// function to delete app record 
 function deleteRecord(id) {
     const records = loadRecords();
     const filteredRecords = records.filter(record => record.id !== id);
     saveRecords(filteredRecords);
 }
 
-// function for JUSON import and export 
+// JSON Import/Export functions
 function exportToJSON() {
     const records = loadRecords();
     const dataStr = JSON.stringify(records, null, 2);
@@ -62,7 +58,7 @@ function importFromJSON(file) {
             try {
                 const data = JSON.parse(e.target.result);
                 
-                // Validating the data structure
+                // Validate data structure
                 if (Array.isArray(data) && data.every(record => 
                     record.id && record.type && record.createdAt
                 )) {
