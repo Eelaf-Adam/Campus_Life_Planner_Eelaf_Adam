@@ -97,11 +97,22 @@
                 <input type="text" id="event-category" placeholder="e.g Conference, Workshop, Meeting">
 
 
+
                 <button id="add-event-btn" class="action-button primary-button full-width">Add Event</button>
             </div>
         </div>
     </div>
 
+    <script>
+  (function() {
+    const theme = localStorage.getItem('theme');
+    if(theme && theme.includes('dark')){
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  })();
+</script>
 
     <script src="scripts/state.js"></script>
     <script src="scripts/validators.js"></script>
