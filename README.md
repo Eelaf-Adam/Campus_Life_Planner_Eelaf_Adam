@@ -99,14 +99,17 @@ CampusLife-Planner_Eelaf_Adam/
 └── seed.json                   # Sample dataset for testing import/export
 ```
 
-## Regex Patterns 
+## 📍 Regex Patterns                                   |
 
-| Pattern         | Matches                                    |                                       |
-| --------------- | ------------------------------------------ | ------------------------------------- |
-| `^Meet`         | Tasks starting with “Meet”                 |                                       |
-| `study          | project`                                   | Tasks containing “study” or “project” |
-| `[0-9]{2,}`     | Items with two or more digits              |                                       |
-| `\b[A-Z][a-z]+` | Capitalized words (like names or subjects) |                                       |
+| **Pattern**     | **Matches Example**                | **Use Case**                                             |                                       |
+| --------------- | ---------------------------------- | -------------------------------------------------------- | ------------------------------------- |
+| `^Meet`         | “Meet with Advisor”                | Tasks that start with the word “Meet”                    |                                       |
+| `study          | project`                           | “Study session” or “Project deadline”                    | Tasks containing “study” or “project” |
+| `[0-9]{2,}`     | “Submit report 2025”               | Items containing two or more digits (e.g., dates or IDs) |                                       |
+| `\b[A-Z][a-z]+` | “Campus Tour”                      | Capitalized words like names or subjects                 |                                       |
+| `^.{10,}$`      | Tasks with more than 10 characters | Filters longer task descriptions                         |                                       |
+| `event          | task`                              | “Add new event” / “Mark task complete”                   | Matches both words “event” or “task”  |
+
 
 ## 🌈 Accessibility Notes
 
@@ -117,6 +120,22 @@ ARIA Live Regions: Feedback messages and notifications are announced by screen r
 Color Contrast: Meets WCAG AA contrast ratio for readability.
 
 Mobile Friendly: Fully responsive design scales to any device width
+
+## ⌨️ Keyboard Map
+CampusLife Planner supports full keyboard navigation for accessibility and efficiency.
+
+| **Key**       | **Action**                                     |
+| ------------- | ---------------------------------------------- |
+| `Tab`         | Move focus between buttons, inputs, and modals |
+| `Shift + Tab` | Move focus backward                            |
+| `Enter`       | Confirm action (e.g., add or save task/event)  |
+| `Esc`         | Close modals, cancel forms, or exit edit mode  |
+| `↑ / ↓`       | Scroll through lists (tasks, events)           |
+| `/`           | Jump to the search bar instantly               |
+| `Ctrl + E`    | Open *Add Event* modal                         |
+| `Ctrl + T`    | Open *Add Task* modal                          |
+| `Ctrl + D`    | Toggle dark/light mode                         |
+
 
 ## 🌐 Browser Support
 - Chrome (latest)
