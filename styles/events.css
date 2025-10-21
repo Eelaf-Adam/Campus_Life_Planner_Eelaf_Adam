@@ -1,4 +1,4 @@
-/* Global Styling & Variables */
+/* Global styling & variables */
 :root {
   --primary-blue: #2563eb; 
   --secondary-blue: #1e4fc4;
@@ -20,6 +20,7 @@ body {
   min-height: 100vh;
 }
 
+/*Layout */
 .app-layout {
   display: flex;
   width: 100%;
@@ -29,9 +30,10 @@ body {
   padding: 1.5rem 2rem;
   overflow-x: hidden;
   flex-grow: 1; 
-  margin-left: 250px; /* keep content clear of fixed sidebar */
+  margin-left: 250px; 
 }
 
+/*Sidebar */
 .new-sidebar {
   width: 250px;
   background: white;
@@ -116,6 +118,7 @@ body {
   margin: 0;
 }
 
+/* Search */
 .search-bar {
   display: flex;
   align-items: center;
@@ -153,6 +156,7 @@ body {
   color: #2563eb;
 }
 
+/* Buttons */
 .action-button {
   display: flex;
   align-items: center;
@@ -181,6 +185,7 @@ body {
   background-color: #1e4fc4;
 }
 
+/* User avater */
 .profile-avatar {
   background: #2563eb;
   color: white;
@@ -258,6 +263,7 @@ body {
   clip: rect(0,0,0,0);
   border: 0;
 }
+
 /* Event card */
 .event-card {
   background: #ffffff;
@@ -286,7 +292,7 @@ body {
   font-weight: 700;
 }
 
-/* Event Meta */
+
 .event-meta {
   display: flex;
   align-items: center;
@@ -372,7 +378,7 @@ border-radius: 8px;
   cursor: pointer;
 }
 
-/* Event Actions */
+
 .event-actions {
     display: flex;
     gap: 0.5rem;
@@ -406,6 +412,38 @@ border-radius: 8px;
     background: #dc2626;
 }
 
+/* Dark theme */
+.dark {
+  background: #0f172a; 
+  color: #f8fafc;
+}
+
+.dark .new-sidebar { 
+    background: #1e293b;
+     border-right: 1px 
+     solid #334155; 
+}
+.dark .new-sidebar nav a { 
+    color: #e2e8f0; 
+}
+
+.dark .new-sidebar nav a.active,
+.dark .new-sidebar nav a:hover { 
+    background: linear-gradient(135deg, #3b82f6, #2563eb); 
+    color: #fff; 
+}
+
+.dark .content { 
+    background: #1e293b; 
+    color: #f8fafc; 
+}
+
+.dark input, .dark select, .dark button { 
+    background: #475569; 
+    color: #f8fafc; 
+    border: 1px solid #64748b; 
+}
+
 /* Responsive */
 @media (max-width: 768px) {
 .kanban-board {
@@ -419,6 +457,6 @@ border-radius: 8px;
 }
 
 .content {
-  margin-left: 0; /* stack under sidebar when it collapses */
+  margin-left: 0; 
 }
 }
