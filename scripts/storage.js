@@ -1,5 +1,6 @@
-const KEY = "tasks";
+const KEY = "tasks"; // LocalStorage key for storing tasks
 
+// Load all records from localstorage 
 function loadRecords() {
     try {
         console.log("Storage")
@@ -10,6 +11,7 @@ function loadRecords() {
     }
 }
 
+// Save all records to localStorage 
 function saveRecords(records) {
     try {
         localStorage.setItem(KEY, JSON.stringify(records));
@@ -18,12 +20,14 @@ function saveRecords(records) {
     }
 }
 
+// Add a new record
 function saveRecord(newRecord) {
     const records = loadRecords();
     records.push(newRecord);
     saveRecords(records);
 }
 
+// Update an existing record by ID
 function updateRecord(updatedRecord) {
     const records = loadRecords();
     const index = records.findIndex(record => record.id === updatedRecord.id);
@@ -33,13 +37,14 @@ function updateRecord(updatedRecord) {
     }
 }
 
+// Delete a record by ID
 function deleteRecord(id) {
     const records = loadRecords();
     const filteredRecords = records.filter(record => record.id !== id);
     saveRecords(filteredRecords);
 }
 
-// JSON Import/Export functions
+// Export records to a JSON file
 function exportToJSON() {
     const records = loadRecords();
     const dataStr = JSON.stringify(records, null, 2);
@@ -51,6 +56,7 @@ function exportToJSON() {
     link.click();
 }
 
+// Import records from a JSON file
 function importFromJSON(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -58,7 +64,7 @@ function importFromJSON(file) {
             try {
                 const data = JSON.parse(e.target.result);
                 
-                // Validate data structure
+                // Ensure imported data is an array of valid records 
                 if (Array.isArray(data) && data.every(record => 
                     record.id && record.type && record.createdAt
                 )) {
